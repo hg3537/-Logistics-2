@@ -1,18 +1,6 @@
 // fixed nave
 let to_top = document.querySelector(`.top`);
 
-function startCount (el)
-{
-    let goal = el.dataset.goal;
-    let counter = setInterval(() =>
-    {
-        el.textContent++;
-        if (el.textContent === goal)
-        {
-            clearInterval(counter);
-        }
-    }, 1000 / goal);
-}
 
 
 function fixednave ()
@@ -43,12 +31,12 @@ function fixednave ()
         about.style.opacity = 1;
     }
 }
-window.onscroll = () => fixednave();
+// window.onscroll = () => fixednave();
 
 // show  class showcollapse in small screen
 
 let toggle = document.querySelector(`#navbar-toggler`);
-toggle.addEventListener(`click`,  () =>
+toggle.addEventListener(`click`, () =>
 {
     document.querySelector(`.collapse`).classList.toggle(`showcollapse`);
     document.querySelector(`.collapse`).classList.toggle(`text-center`);
@@ -57,33 +45,66 @@ toggle.addEventListener(`click`,  () =>
 let navlink = document.querySelectorAll(`.nav-link`);
 navlink.forEach(k =>
 {
-    k.addEventListener(`click`, () => {
+    k.addEventListener(`click`, () =>
+    {
         document.querySelector(`.collapse`).classList.remove(`showcollapse`);
-        document.querySelector(`.collapse`).classList.toggle(`text-center`); 
-    })
-})
+        document.querySelector(`.collapse`).classList.toggle(`text-center`);
+    });
+});
 let start = false;
 window.addEventListener(`scroll`, () =>
 {
     let counter_h2 = document.querySelectorAll(`.counter h2`);
-    let fact_top = document.querySelector(`.fact`).offsetTop;
-    let fact_outhieht = document.querySelector(`.fact`).offsetHeight;
+    let fact_top = document.querySelector(`.fact .row`);
     // counter
-    if (window.scrollY === fact_top);
+    if (window.scrollY >= fact_top.offsetTop)
     {
-        
         if (!start)
         {
-            counter_h2.forEach((n) => startCount(n));
+            counter_h2.forEach(h =>
+            {
+                let goal = h.dataset.goal;
+                let counter = setInterval(() =>
+                {
+                    h.textContent++;
+                    if (h.textContent == goal)
+                    {
+                        clearInterval(counter);
+                    }
+                }, 1000 / goal);
+              
+            });
+            start = true;
         }
-        start = true;
+        console.log(`row`)
     }
-});
+  
+    const showpagehieght = window.scrollY;
+    // fixeed nave
+    if (showpagehieght >= 180)
+    {
+        document.querySelector(`.navbar`).classList.add(`fexednave`);
+    } else
+    {
+        document.querySelector(`.navbar`).classList.remove(`fexednave`);
+    }
+    let about = document.querySelector(`.about .container`);
+    
+    // anmation about
+    if (showpagehieght >= (about.offsetTop - 150))
+    {
+        about.classList.add(`anmation`);
+        about.style.opacity = 1;
+    }
+}
+);
+
 // change backgroud
 let landing = document.querySelector(`.landing`);
-let landingimg = [ `carousel-1.jpg`, `carousel-2.jpg`, `landing.jpg` ];
+let landingimg = [ `carousel-1.jpg`, `carousel-2.jpg` ];
 setInterval(() =>
 {
     let rondomtime = Math.floor(Math.random() * landingimg.length);
     landing.style.backgroundImage = `url(${landingimg[ rondomtime ]})`;
 }, 1000);
+// end
