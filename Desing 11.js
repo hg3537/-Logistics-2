@@ -5,7 +5,7 @@ let to_top = document.querySelector(`.top`);
 
 function fixednave ()
 {
-    const showpagehieght = window.scrollY;
+    var showpagehieght = window.scrollY;
     // fixeed nave
     if (showpagehieght >= 180)
     {
@@ -31,7 +31,7 @@ function fixednave ()
         about.style.opacity = 1;
     }
 }
-// window.onscroll = () => fixednave();
+
 
 // show  class showcollapse in small screen
 
@@ -54,6 +54,26 @@ navlink.forEach(k =>
 let start = false;
 window.addEventListener(`scroll`, () =>
 {
+    /* active class */
+    let sections = document.querySelectorAll(`.section`);
+    sections.forEach(sec =>
+    {
+        let stop = window.scrollY;
+        let offset = sec.offsetTop;
+        let id = sec.getAttribute(`id`);
+        if (stop >= (offset - 100))
+        {
+            cuurentsection = id;
+        }
+    });
+    navlink.forEach(li =>
+    {
+        if (li.href.includes(cuurentsection))
+        {
+            document.querySelector(`.active`).classList.remove(`active`);
+            li.classList.add(`active`);
+        }
+    });
     let counter_h2 = document.querySelectorAll(`.counter h2`);
     let fact_top = document.querySelector(`.fact .row`);
     // counter
@@ -72,13 +92,12 @@ window.addEventListener(`scroll`, () =>
                         clearInterval(counter);
                     }
                 }, 1000 / goal);
-              
+
             });
             start = true;
         }
-        console.log(`row`)
     }
-  
+
     const showpagehieght = window.scrollY;
     // fixeed nave
     if (showpagehieght >= 180)
@@ -89,13 +108,27 @@ window.addEventListener(`scroll`, () =>
         document.querySelector(`.navbar`).classList.remove(`fexednave`);
     }
     let about = document.querySelector(`.about .container`);
-    
+
     // anmation about
     if (showpagehieght >= (about.offsetTop - 150))
     {
         about.classList.add(`anmation`);
         about.style.opacity = 1;
+       
     }
+    /* feature */
+    document.querySelectorAll(`.f-col`).forEach(col =>
+    {
+        if (window.scrollY >= (col.offsetTop - 200))
+        {
+            col.classList.add(`no-translate`);
+        } else
+        {
+            col.classList.remove(`no-translate`);
+        }
+    })
+
+
 }
 );
 
