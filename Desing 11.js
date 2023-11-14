@@ -31,16 +31,14 @@ function fixednave ()
         about.style.opacity = 1;
     }
 }
-
-
 // show  class showcollapse in small screen
-
 let toggle = document.querySelector(`#navbar-toggler`);
 toggle.addEventListener(`click`, () =>
 {
     document.querySelector(`.collapse`).classList.toggle(`showcollapse`);
     document.querySelector(`.collapse`).classList.toggle(`text-center`);
 });
+
 // hide collapse when click at link
 let navlink = document.querySelectorAll(`.nav-link`);
 navlink.forEach(k =>
@@ -50,6 +48,14 @@ navlink.forEach(k =>
         document.querySelector(`.collapse`).classList.remove(`showcollapse`);
         document.querySelector(`.collapse`).classList.toggle(`text-center`);
     });
+});
+document.addEventListener(`click`, (e) =>
+{
+    if (!document.querySelector(`.collapse`).contains(e.target) && !toggle.contains(e.target))
+    {
+        document.querySelector(`.collapse`).classList.remove(`showcollapse`);
+        document.querySelector(`.collapse`).classList.remove(`text-center`);
+    }
 });
 let start = false;
 window.addEventListener(`scroll`, () =>
@@ -114,7 +120,7 @@ window.addEventListener(`scroll`, () =>
     {
         about.classList.add(`anmation`);
         about.style.opacity = 1;
-       
+
     }
     /* feature */
     document.querySelectorAll(`.f-col`).forEach(col =>
@@ -126,7 +132,7 @@ window.addEventListener(`scroll`, () =>
         {
             col.classList.remove(`no-translate`);
         }
-    })
+    });
 
 
 }
